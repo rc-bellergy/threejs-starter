@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+
 module.exports = {
   mode: 'development',
   entry: {
@@ -10,6 +11,7 @@ module.exports = {
     lines: './src/lines.js',
     text: './src/text.js',
     model: './src/model.js',
+    hello_cube: './src/hello-cube.js',
   },
   devtool: 'inline-source-map',
   devServer: {
@@ -17,6 +19,12 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: './src/models/', to:'models/' },
+      ]
+    }),
+
     new HtmlWebpackPlugin({
       title: 'three.js starter page',
       chunks: ['index']
@@ -36,11 +44,13 @@ module.exports = {
       filename: 'model.html',
       chunks: ['model']
     }),
-    new CopyWebpackPlugin({
-      patterns: [
-        { from: './src/models/', to:'models/' },
-      ]
-  })
+    new HtmlWebpackPlugin({
+      title: 'three.js hello cube',
+      filename: 'hello_cube.html',
+      chunks: ['hello_cube']
+    }),
+    
+    
   ],
   module: {
     rules: [
