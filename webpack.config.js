@@ -6,12 +6,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 module.exports = {
   mode: 'development',
   entry: {
-    index: './src/index.js',
-    lines: './src/lines.js',
-    text: './src/text.js',
-    model: './src/model.js',
     hello_cube: './src/hello_cube.js',
-    hello_primitive: './src/hello_primitive.js'
+    hello_primitive: './src/hello_primitive.js',
+    hello_font: './src/hello_font.js',
+    hello_points: './src/hello_points.js'
   },
   devtool: 'inline-source-map',
   devServer: {
@@ -19,42 +17,35 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
+
+    // copy models to dist directory
     new CopyWebpackPlugin({
       patterns: [
         { from: './src/models/', to: 'models/' }
       ]
     }),
 
-    new HtmlWebpackPlugin({
-      title: 'three.js starter page',
-      chunks: ['index']
-    }),
-    new HtmlWebpackPlugin({
-      title: 'three.js lines sample',
-      filename: 'lines.html',
-      chunks: ['lines']
-    }),
-    new HtmlWebpackPlugin({
-      title: 'three.js text sample',
-      filename: 'text.html',
-      chunks: ['text']
-    }),
-    new HtmlWebpackPlugin({
-      title: 'three.js model sample',
-      filename: 'model.html',
-      chunks: ['model']
-    }),
+    // create html pages
     new HtmlWebpackPlugin({
       title: 'three.js hello cube',
-      filename: 'hello_cube.html',
+      filename: 'index.html',
       chunks: ['hello_cube']
     }),
     new HtmlWebpackPlugin({
       title: 'three.js hello primitive',
       filename: 'hello_primitive.html',
       chunks: ['hello_primitive']
+    }),
+    new HtmlWebpackPlugin({
+      title: 'three.js hello font',
+      filename: 'hello_font.html',
+      chunks: ['hello_font']
+    }),
+    new HtmlWebpackPlugin({
+      title: 'three.js hello points',
+      filename: 'hello_points.html',
+      chunks: ['hello_points']
     })
-
   ],
   module: {
     rules: [

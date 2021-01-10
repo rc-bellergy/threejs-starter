@@ -27,4 +27,5 @@
 - open the page `http:127.0.0.1:8080/my_script.html`
 
 ## Primitive Samples
+src/hello_priitive.js
 ![](./samples.jpg)
