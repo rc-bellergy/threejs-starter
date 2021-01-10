@@ -1,4 +1,4 @@
-# three.js starter and sample
+# three.js starter and sample using webpack5
 
 ## Install
     npm install
@@ -10,9 +10,9 @@
     npm run build
 
 ## Write your own code
-- copy the `src/hello-cube.js`
+- copy the `src/hello_cube.js`
 - modify the example code to replace the objects and animations
-- add `src/hello-cube.js` to the `webpack.config.js`
+- add `src/hello_cube.js` to the `webpack.config.js`
   ```js
   entry: {
       my_script: './src/my_script.js'
@@ -25,3 +25,6 @@
   ```
 - strat server `npm start`
 - open the page `http:127.0.0.1:8080/my_script.html`
+
+## Primitive Samples
+![](./samples.jpg)

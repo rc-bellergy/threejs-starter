@@ -10,7 +10,8 @@ module.exports = {
     lines: './src/lines.js',
     text: './src/text.js',
     model: './src/model.js',
-    hello_cube: './src/hello-cube.js'
+    hello_cube: './src/hello_cube.js',
+    hello_primitive: './src/hello_primitive.js'
   },
   devtool: 'inline-source-map',
   devServer: {
@@ -47,6 +48,11 @@ module.exports = {
       title: 'three.js hello cube',
       filename: 'hello_cube.html',
       chunks: ['hello_cube']
+    }),
+    new HtmlWebpackPlugin({
+      title: 'three.js hello primitive',
+      filename: 'hello_primitive.html',
+      chunks: ['hello_primitive']
     })
 
   ],
