@@ -9,7 +9,8 @@ module.exports = {
     hello_cube: './src/hello_cube.js',
     hello_primitive: './src/hello_primitive.js',
     hello_font: './src/hello_font.js',
-    hello_points: './src/hello_points.js'
+    hello_points: './src/hello_points.js',
+    hello_position: './src/hello_position.js'
   },
   devtool: 'inline-source-map',
   devServer: {
@@ -45,6 +46,11 @@ module.exports = {
       title: 'three.js hello points',
       filename: 'hello_points.html',
       chunks: ['hello_points']
+    }),
+    new HtmlWebpackPlugin({
+      title: 'three.js hello position',
+      filename: 'hello_position.html',
+      chunks: ['hello_position']
     })
   ],
   module: {
