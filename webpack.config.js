@@ -10,11 +10,13 @@ module.exports = {
     hello_primitive: './src/hello_primitive.js',
     hello_font: './src/hello_font.js',
     hello_points: './src/hello_points.js',
-    hello_position: './src/hello_position.js'
+    hello_position: './src/hello_position.js',
+    hello_scroller: './src/hello_scroller.js'
   },
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: './dist'
+    contentBase: './dist',
+    host: '0.0.0.0'
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -51,6 +53,12 @@ module.exports = {
       title: 'three.js hello position',
       filename: 'hello_position.html',
       chunks: ['hello_position']
+    }),
+    new HtmlWebpackPlugin({
+      title: 'three.js hello scroller',
+      filename: 'hello_scroller.html',
+      chunks: ['hello_scroller'],
+      template: './src/hello_scroller.ejs'
     })
   ],
   module: {
