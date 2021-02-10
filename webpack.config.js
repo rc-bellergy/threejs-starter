@@ -6,12 +6,14 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 module.exports = {
   mode: 'development',
   entry: {
-    hello_cube: './src/hello_cube.js',
-    hello_primitive: './src/hello_primitive.js',
-    hello_font: './src/hello_font.js',
-    hello_points: './src/hello_points.js',
-    hello_position: './src/hello_position.js',
-    hello_scroller: './src/hello_scroller.js'
+    cube: './src/cube.js',
+    primitive: './src/primitive.js',
+    font: './src/font.js',
+    points: './src/points.js',
+    position: './src/position.js',
+    scroller: './src/scroller.js',
+    loader: './src/GLTFLoader.js',
+    loader2: './src/DRACOLoader.js'
   },
   devtool: 'inline-source-map',
   devServer: {
@@ -24,41 +26,49 @@ module.exports = {
     // copy models to dist directory
     new CopyWebpackPlugin({
       patterns: [
-        { from: './src/models/', to: 'models/' }
+        { from: './src/models/', to: 'models/' },
+        { from: './src/lib/', to: 'lib/' }
       ]
     }),
-
     // create html pages
     new HtmlWebpackPlugin({
       title: 'three.js hello cube',
       filename: 'index.html',
-      chunks: ['hello_cube']
+      chunks: ['cube']
     }),
     new HtmlWebpackPlugin({
       title: 'three.js hello primitive',
-      filename: 'hello_primitive.html',
-      chunks: ['hello_primitive']
+      filename: 'primitive.html',
+      chunks: ['primitive']
     }),
     new HtmlWebpackPlugin({
       title: 'three.js hello font',
-      filename: 'hello_font.html',
-      chunks: ['hello_font']
+      filename: 'font.html',
+      chunks: ['font']
     }),
     new HtmlWebpackPlugin({
       title: 'three.js hello points',
-      filename: 'hello_points.html',
-      chunks: ['hello_points']
+      filename: 'points.html',
+      chunks: ['points']
     }),
     new HtmlWebpackPlugin({
       title: 'three.js hello position',
-      filename: 'hello_position.html',
-      chunks: ['hello_position']
+      filename: 'position.html',
+      chunks: ['position']
+    }), new HtmlWebpackPlugin({
+      title: 'three.js hello DRACO Loader',
+      filename: 'loader2.html',
+      chunks: ['loader2']
+    }), new HtmlWebpackPlugin({
+      title: 'three.js hello GLTF Loader',
+      filename: 'loader.html',
+      chunks: ['loader']
     }),
     new HtmlWebpackPlugin({
       title: 'three.js hello scroller',
-      filename: 'hello_scroller.html',
-      chunks: ['hello_scroller'],
-      template: './src/hello_scroller.ejs'
+      filename: 'scroller.html',
+      chunks: ['scroller'],
+      template: './src/scroller.ejs'
     })
   ],
   module: {

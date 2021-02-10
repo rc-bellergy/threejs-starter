@@ -1,5 +1,8 @@
+// Sample of loading glb objects
+
 import './style.css'
 import * as THREE from 'three'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 /**
  * Reference: https://threejsfundamentals.org/threejs/lessons/threejs-fundamentals.html
@@ -8,18 +11,16 @@ import * as THREE from 'three'
 function main () {
   // create canvas and renderer
   const canvas = document.createElement('canvas')
-  const holder = document.getElementById('TheScene')
-  holder.appendChild(canvas)
+  document.body.appendChild(canvas)
   const renderer = new THREE.WebGLRenderer({ canvas })
-  const theScroller = document.getElementById('TheScroller')
 
   // create camera
   const fov = 75
   const aspect = 2 // the canvas default
   const near = 0.1
-  const far = 5
+  const far = 1000
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
-  camera.position.z = 2
+  camera.position.z = 5
 
   // create scene
   const scene = new THREE.Scene()
@@ -31,25 +32,17 @@ function main () {
   light.position.set(-1, 2, 4)
   scene.add(light)
 
-  // create your objects below:
-  // Example: create 3 cubes and add to scene
-  const boxWidth = 1
-  const boxHeight = 1
-  const boxDepth = 1
-  const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth)
+  // Example: load glb model 'doughnut'
+  const gltfLoader = new GLTFLoader()
+  const model = 'models/doughnut2.glb'
 
-  function makeInstance (geometry, color, x) {
-    const material = new THREE.MeshPhongMaterial({ color })
-    const cube = new THREE.Mesh(geometry, material)
-    scene.add(cube)
-    cube.position.x = x
-    return cube
-  }
-  const cubes = [
-    makeInstance(geometry, 0x44aa88, 0),
-    makeInstance(geometry, 0x8844aa, -2),
-    makeInstance(geometry, 0xaa8844, 2)
-  ]
+  let obj = null
+  gltfLoader.load(model, (gltf) => {
+    obj = gltf.scene
+    scene.add(obj)
+  }, undefined, function (error) {
+    console.error(error)
+  })
   // Example end
 
   // Manage window resize and ratio of canvas
@@ -77,14 +70,13 @@ function main () {
     camera.aspect = canvas.clientWidth / canvas.clientHeight
     camera.updateProjectionMatrix()
 
-    // Create you animation update:
-    // Example: move 3 cubes
-    cubes.forEach((cube, i) => {
-      // const speed = 1 + i * 0.1
-      const rot = -window.scrollY/1000
-      cube.rotation.x = rot
-      cube.rotation.y = rot
-    })
+    // Create you animation update
+    if (obj) {
+      const rot = time
+      obj.rotation.x = rot
+      obj.rotation.y = rot / 2
+      obj.rotation.z = rot / 3
+    }
     // Example end
 
     renderer.render(scene, camera)
