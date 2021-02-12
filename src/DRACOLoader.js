@@ -21,20 +21,31 @@ function main () {
   const near = 0.1
   const far = 1000
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
-  camera.position.z = 10
+  camera.position.z = 30
 
   // create scene
   const scene = new THREE.Scene()
+  scene.background = new THREE.Color(0x111111)
+  scene.environment = new THREE.CubeTextureLoader()
+    .setPath('models/env/')
+    .load([
+      'pos-x.png',
+      'neg-x.png',
+      'pos-y.png',
+      'neg-y.png',
+      'pos-z.png',
+      'neg-z.png'
+    ])
 
   // create light and add to scene
   const color = 0xFF0000
-  // const intensity = 1
-  const light = new THREE.DirectionalLight(color)
+  const intensity = 1
+  const light = new THREE.DirectionalLight(color, intensity)
   light.position.set(20, 20, 50)
   scene.add(light)
 
   // Example
-  let obj = null
+  let gltfscene = null
   const dracoLoader = new DRACOLoader()
   dracoLoader.setDecoderPath('lib/draco/gltf/')
   dracoLoader.preload()
@@ -42,8 +53,9 @@ function main () {
   const loader = new GLTFLoader().setPath('models/')
   loader.setDRACOLoader(dracoLoader)
   loader.load('ico-more.glb', (gltf) => {
-    obj = gltf.scene
-    scene.add(obj)
+    gltfscene = gltf.scene
+    gltfscene.scale.set(5, 5, 5)
+    scene.add(gltfscene)
   }, undefined, function (error) {
     console.error(error)
   })
@@ -75,11 +87,11 @@ function main () {
     camera.updateProjectionMatrix()
 
     // Create you animation update
-    if (obj) {
+    if (gltfscene) {
       const rot = time
-      obj.rotation.x = rot
-      obj.rotation.y = rot / 2
-      obj.rotation.z = rot / 3
+      gltfscene.rotation.x = rot
+      gltfscene.rotation.y = rot / 2
+      gltfscene.rotation.z = rot / 3
     }
     // Example end
 
