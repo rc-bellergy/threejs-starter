@@ -21,7 +21,7 @@ function main () {
   const near = 0.1
   const far = 1000
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
-  camera.position.z = 30
+  camera.position.z = 5
 
   // create scene
   const scene = new THREE.Scene()
@@ -38,10 +38,10 @@ function main () {
     ])
 
   // create light and add to scene
-  const color = 0xFF0000
-  const intensity = 1
-  const light = new THREE.DirectionalLight(color, intensity)
-  light.position.set(20, 20, 50)
+  const color = 0xffffff
+  const intensity = 3
+  const light = new THREE.PointLight(color, intensity)
+  light.position.set(0, 0, 0)
   scene.add(light)
 
   // Example
@@ -54,7 +54,22 @@ function main () {
   loader.setDRACOLoader(dracoLoader)
   loader.load('ico-more.glb', (gltf) => {
     gltfscene = gltf.scene
-    gltfscene.scale.set(5, 5, 5)
+    console.log(gltfscene)
+
+    // Apply material
+    const objects = gltfscene.children[0].children[0].children
+    objects.forEach(obj => {
+      if (obj.material) {
+        obj.material.emissive = new THREE.Color(0x0000FF)
+        obj.material.emissiveIntensity = 0.5
+        obj.rotation.x = 0.3
+      } else {
+        obj.children[0].material.emissive = new THREE.Color(0x99CCBB)
+        obj.children[0].material.emissiveIntensity = 0.8
+        obj.children[0].rotation.x = 0.3
+        obj.children[1].rotation.x = 0.3
+      }
+    })
     scene.add(gltfscene)
   }, undefined, function (error) {
     console.error(error)
